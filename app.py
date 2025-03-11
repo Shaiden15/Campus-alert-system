@@ -242,38 +242,6 @@ with app.app_context():
             db.session.add(student)
         
         db.session.commit()
-        
-        # Add some sample disruptions if none exist
-        if Disruption.query.count() == 0:
-            sample_disruptions = [
-                {
-                    'title': 'Protest at Main Entrance',
-                    'description': 'A group of approximately 50 students are protesting at the main entrance of ML Sultan Campus. The entrance is currently blocked. Security personnel are on site managing the situation.',
-                    'location': 'ML Sultan Campus',
-                    'severity': 'high',
-                    'status': 'verified',
-                    'reported_by': student.id,
-                    'verified_by': admin.id
-                },
-                {
-                    'title': 'Power Outage',
-                    'description': 'There is a power outage affecting the Steve Biko Campus. The backup generators have been activated for essential services. Maintenance team is working to resolve the issue.',
-                    'location': 'Steve Biko Campus',
-                    'severity': 'medium',
-                    'status': 'verified',
-                    'reported_by': student.id,
-                    'verified_by': staff.id
-                },
-                {
-                    'title': 'Water Leak in Library',
-                    'description': 'There is a water leak in the main library at Ritson Campus. The affected area has been cordoned off. Maintenance team has been notified and is en route.',
-                    'location': 'Ritson Campus',
-                    'severity': 'low',
-                    'status': 'resolved',
-                    'reported_by': staff.id,
-                    'verified_by': admin.id
-                }
-            ]
             
             for disruption_data in sample_disruptions:
                 disruption = Disruption(**disruption_data)
