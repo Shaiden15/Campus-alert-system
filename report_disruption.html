@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DUT Campus Security - Report Disruption</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            min-height: 100vh;
+        }
+        
+        .navbar {
+            background-color: #003366;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .navbar-menu {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .navbar-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+        
+        .navbar-menu a:hover {
+            opacity: 0.8;
+        }
+        
+        .navbar-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .page-header {
+            margin-bottom: 30px;
+        }
+        
+        .page-header h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .page-header p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .form-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #003366;
+            outline: none;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #003366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #002244;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+        
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            color: white;
+            font-weight: 500;
+        }
+        
+        .alert-danger {
+            background-color: #dc3545;
+        }
+        
+        .alert-success {
+            background-color: #28a745;
+        }
+        
+        .alert-info {
+            background-color: #17a2b8;
+        }
+        
+        .severity-options {
+            display: flex;
+            gap: 15px;
+            margin-top: 5px;
+        }
+        
+        .severity-option {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .severity-option:hover {
+            border-color: #003366;
+        }
+        
+        .severity-option.selected {
+            background-color: #003366;
+            color: white;
+            border-color: #003366;
+        }
+        
+        .severity-option input {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-toggle {
+                display: block;
+            }
+            
+            .navbar-menu {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background-color: #003366;
+                flex-direction: column;
+                padding: 10px 20px;
+                z-index: 100;
+            }
+            
+            .navbar-menu.active {
+                display: flex;
+            }
+            
+            .form-card {
+                padding: 20px;
+            }
+            
+            .severity-options {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">DUT Campus Security</div>
+        <button class="navbar-toggle" aria-label="Toggle navigation">
+            ☰
+        </button>
+        <div class="navbar-menu">
+            <a href="{{ url_for('index') }}">Dashboard</a>
+            <a href="{{ url_for('report_disruption') }}">Report Disruption</a>
+            <a href="{{ url_for('current_disruptions') }}">Current Disruptions</a>
+            <a href="{{ url_for('past_disruptions') }}">Past Disruptions</a>
+            {% if session.get('role') == 'admin' or session.get('role') == 'staff' %}
+            <a href="{{ url_for('verify_disruptions') }}">Verify Reports</a>
+            {% endif %}
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <div class="page-header">
+            <h1>Report a Disruption</h1>
+            <p>Use this form to report a security incident or disruption on campus</p>
+        </div>
+        
+        <div class="form-card">
+            <form action="{{ url_for('report_disruption') }}" method="post">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" class="form-control" placeholder="Brief description of the disruption" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" name="location" class="form-control" placeholder="Campus and specific location" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Severity</label>
+                    <div class="severity-options">
+                        <label class="severity-option" id="severity-low">
+                            <input type="radio" name="severity" value="low" required>
+                            Low
+                        </label>
+                        <label class="severity-option" id="severity-medium">
+                            <input type="radio" name="severity" value="medium">
+                            Medium
+                        </label>
+                        <label class="severity-option" id="severity-high">
+                            <input type="radio" name="severity" value="high">
+                            High
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" class="form-control" placeholder="Provide detailed information about the disruption" required></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn">Submit Report</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // Add mobile menu toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbarToggle = document.querySelector('.navbar-toggle');
+            const navbarMenu = document.querySelector('.navbar-menu');
+            
+            if (navbarToggle) {
+                navbarToggle.addEventListener('click', function() {
+                    navbarMenu.classList.toggle('active');
+                });
+            }
+            
+            // Add severity selection functionality
+            const severityOptions = document.querySelectorAll('.severity-option');
+            
+            severityOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    severityOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Check the radio button
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
