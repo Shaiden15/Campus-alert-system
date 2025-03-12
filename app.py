@@ -4,7 +4,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 import os
 
-from email_service import send_disruption_notification
 from functools import wraps
 
 app = Flask(__name__)
