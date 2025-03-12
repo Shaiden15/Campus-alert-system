@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Alerts - Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+
+    <!-- Include Leaflet.js CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+
+<div class="container">
+    <div class="map-section" id="map"></div>
+    <div class="login-section">
+        <h2>Login to Your Account</h2>
+        <div class="avatar">👤</div>
+        <div class="input-group">
+            <span>👤</span>
+            <input type="text" placeholder="Email Address">
+        </div>
+        <div class="input-group">
+            <span>🔒</span>
+            <input type="password" placeholder="Password">
+        </div>
+        <div class="button-group">
+            <button class="login-btn">Login</button>
+            <a href="{{ url_for('register') }}">
+            <button class="register-btn">Register</button>
+            </a>
+            <a href="{{ url_for('home_loggedIn') }}">
+            <button class="login-btn">Logged In</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Include Leaflet.js JS -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+    // Coordinates for Durban University of Technology (DUT)
+    var dutCoordinates = [-29.8540, 31.0217];
+
+    // Initialize the map
+    var map = L.map('map').setView(dutCoordinates, 15); // Set initial position to DUT coordinates and zoom level 15
+
+    // Add the OpenStreetMap tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Optionally, add a marker for DUT
+    L.marker(dutCoordinates).addTo(map)
+        .bindPopup('<b>Durban University of Technology (DUT)</b>')
+        .openPopup();
+</script>
+
+</body>
+</html>
+

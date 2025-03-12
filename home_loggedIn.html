@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Logged In</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home_loggedIn.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Welcome Back 👤 </h1></br>
+    <div class="card-container">
+        <!-- First Card -->
+        <div class="card">
+            <div class="card-front">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSQxjt2geP62boYIPlunZUahs05Jw6dfSA6Q&s" alt="Image" />
+            </div>
+            <div class="card-back">
+                <p>View the lastest campus news</p>
+                <a href="{{ url_for('view_posts') }}" class="btn">View Posts</a>
+            </div>
+        </div>
+
+        <!-- Second Card -->
+        <div class="card">
+            <div class="card-front">
+                <img src="https://img.freepik.com/premium-vector/untitled12_901054-156.jpg" alt="Image" />
+            </div>
+            <div class="card-back">
+                <p>Keep others in the loop, upload a post of the latest campus news.</p>
+                <a href="{{ url_for('upload_posts') }}" class="btn">Upload Posts</a>
+            </div>
+        </div>
+
+        <!-- Third Card with added 'Security Tips' button -->
+        <div class="card">
+            <div class="card-front">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTl6P8cNlQREffGJyLqSiupPSZRGF4BrjShOg&s" alt="Image" />
+            </div>
+            <div class="card-back">
+                <p>Here are some secuirty tips to help keep you safe on campus.</p>
+                <a href="{{ url_for('security_tips') }}" class="btn">Security Tips</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="button-group">
+        <a href="{{ url_for('home') }}" class="btn back-btn">← Back to Home</a>
+    </div>
+</div>
+
+</body>
+</html>
+
