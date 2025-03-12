@@ -6,8 +6,8 @@ import os
 
 def send_email_notification(recipients, subject, message):
     
-    sender_email = os.environ.get('EMAIL_USER', 'security@dut.ac.za')
-    password = os.environ.get('EMAIL_PASSWORD', 'your_password')
+    sender_email = os.environ.get('EMAIL_USER', 'securitydut@gmail.com')
+    password = os.environ.get('EMAIL_PASSWORD', 'security123')
     smtp_server = os.environ.get('SMTP_SERVER', 'smtp.gmail.com')
     smtp_port = int(os.environ.get('SMTP_PORT', 587))
     
@@ -45,8 +45,7 @@ def send_email_notification(recipients, subject, message):
         return False
 
 def send_disruption_notification(disruption):
-    
-    recipients = ["student@dut.ac.za", "staff@dut.ac.za"]
+
     
     subject = f"DUT Security Alert: {disruption.title}"
     
