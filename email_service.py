@@ -5,39 +5,26 @@ from email.mime.multipart import MIMEMultipart
 import os
 
 def send_email_notification(recipients, subject, message):
-    """
-    Send email notifications to recipients using SMTP
     
-    Args:
-        recipients (list): List of email addresses
-        subject (str): Email subject
-        message (str): Email message body (HTML)
-    
-    Returns:
-        bool: True if email sent successfully, False otherwise
-    """
-    # For development/testing purposes, you can set these environment variables
-    # or replace with your actual SMTP settings
     sender_email = os.environ.get('EMAIL_USER', 'security@dut.ac.za')
     password = os.environ.get('EMAIL_PASSWORD', 'your_password')
     smtp_server = os.environ.get('SMTP_SERVER', 'smtp.gmail.com')
     smtp_port = int(os.environ.get('SMTP_PORT', 587))
     
     try:
-        # Create message
+        
         msg = MIMEMultipart()
         msg['From'] = sender_email
         msg['To'] = ', '.join(recipients)
         msg['Subject'] = subject
         
-        # Add body to email
         msg.attach(MIMEText(message, 'html'))
         
-        # Connect to SMTP server
+       
         server = smtplib.SMTP(smtp_server, smtp_port)
         server.starttls()
         
-        # Login to email account
+       
         server.login(sender_email, password)
         
         # Send email
@@ -49,7 +36,7 @@ def send_email_notification(recipients, subject, message):
     except Exception as e:
         print(f"Failed to send email: {e}")
         
-        # For development, print the email content
+        #  print the email content
         print(f"Email would have been sent:")
         print(f"To: {', '.join(recipients)}")
         print(f"Subject: {subject}")
@@ -58,22 +45,12 @@ def send_email_notification(recipients, subject, message):
         return False
 
 def send_disruption_notification(disruption):
-    """
-    Send notification about a verified disruption
     
-    Args:
-        disruption: The disruption object
-    
-    Returns:
-        bool: True if notification sent successfully, False otherwise
-    """
-    # In a real application, you would fetch all user emails from the database
-    # For now, we'll use a mock list
     recipients = ["student@dut.ac.za", "staff@dut.ac.za"]
     
     subject = f"DUT Security Alert: {disruption.title}"
     
-    # Create HTML message
+    
     message = f"""
     <html>
     <head>
