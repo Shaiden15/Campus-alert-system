@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniSafe - Security Team Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: slideDown 0.5s ease;
+        }
+        
+        .login-header h1 {
+            font-size: 28px;
+            color: #003366;
+            margin-bottom: 10px;
+        }
+        
+        .login-header p {
+            color: #555;
+            font-size: 16px;
+        }
+        
+        .login-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        .login-logo svg {
+            width: 60px;
+            height: 60px;
+            color: #003366;
+        }
+        
+        .login-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: slideUp 0.5s ease;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease;
+            animation-fill-mode: both;
+        }
+        
+        .form-group:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+        
+        .form-group:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-control:focus {
+            border-color: #003366;
+            outline: none;
+            box-shadow: 0 2px 10px rgba(0, 51, 102, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #003366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease;
+            animation-delay: 0.3s;
+            animation-fill-mode: both;
+        }
+        
+        .btn:hover {
+            background-color: #002244;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .login-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+            animation: fadeIn 0.5s ease;
+            animation-delay: 0.4s;
+            animation-fill-mode: both;
+        }
+        
+        .login-footer a {
+            color: #003366;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .login-footer a:hover {
+            color: #002244;
+            text-decoration: underline;
+        }
+        
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            color: white;
+            font-weight: 500;
+            animation: shake 0.5s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .alert-danger {
+            background-color: #dc3545;
+        }
+        
+        .alert-success {
+            background-color: #28a745;
+        }
+        
+        .alert-info {
+            background-color: #17a2b8;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            10%, 30%, 50%, 70%, 90% {
+                transform: translateX(-5px);
+            }
+            20%, 40%, 60%, 80% {
+                transform: translateX(5px);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <div class="login-header">
+            <div class="login-logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+            </div>
+            <h1>UniSafe - Security Team</h1>
+            <p>Login to the security team dashboard</p>
+        </div>
+        
+        <div class="login-card">
+            <form action="{{ url_for('security_login') }}" method="post">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
+                </div>
+                
+                <button type="submit" class="btn">Security Login</button>
+            </form>
+        </div>
+        
+        <div class="login-footer">
+            <a href="{{ url_for('login') }}">Return to regular login</a>
+           
+
+        </div>
+    </div>
+    
+    <script>
+        // Hide alerts after 5 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('.alert');
+            if (alerts.length > 0) {
+                setTimeout(function() {
+                    alerts.forEach(alert => {
+                        alert.style.opacity = '0';
+                        alert.style.transition = 'opacity 0.5s ease';
+                        setTimeout(function() {
+                            alert.style.display = 'none';
+                        }, 500);
+                    });
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>
