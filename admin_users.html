@@ -505,7 +505,7 @@
               });
           }
           
-          // User dropdown toggle
+          
           const userMenu = document.querySelector('.user-menu');
           const userDropdown = document.querySelector('.user-dropdown');
           
@@ -515,13 +515,13 @@
                   e.stopPropagation();
               });
               
-              // Close dropdown when clicking outside
+             
               document.addEventListener('click', function() {
                   userDropdown.classList.remove('active');
               });
           }
           
-          // Hide alerts after 5 seconds
+          
           const alerts = document.querySelectorAll('.alert');
           if (alerts.length > 0) {
               setTimeout(function() {
@@ -564,12 +564,12 @@
       
       function confirmDelete(userId, username) {
           if (confirm(`Are you sure you want to delete user "${username}"? This action cannot be undone.`)) {
-              // Here you would typically make an AJAX request to delete the user
-              // For now, we'll just redirect to a hypothetical delete endpoint
+              
               window.location.href = `/admin/delete-user/${userId}`;
           }
       }
   </script>
 </body>
 </html>
+
 
